@@ -13,7 +13,7 @@ import wave
 import pandas as pd
 
 
-### RECORDING FUNCTION TAKEN FROM https://gist.github.com/sloria
+'''RECORDING FUNCTION TAKEN FROM https://gist.github.com/sloria'''
 
 class Recorder(object):
     def __init__(self, channels=1, rate=44100, frames_per_buffer=1024):
@@ -42,18 +42,6 @@ class RecordingFile(object):
 
     def __exit__(self, exception, value, traceback):
         self.close()
-
-    def record(self, duration):
-        # Use a stream with no callback function in blocking mode
-        self._stream = self._pa.open(format=pyaudio.paInt16,
-                                        channels=self.channels,
-                                        rate=self.rate,
-                                        input=True,
-                                        frames_per_buffer=self.frames_per_buffer)
-        for _ in range(int(self.rate / self.frames_per_buffer * duration)):
-            audio = self._stream.read(self.frames_per_buffer)
-            self.wavefile.writeframes(audio)
-        return None
 
     def start_recording(self):
         # Use a stream with a callback in non-blocking mode
